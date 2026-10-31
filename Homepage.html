@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Homepage</title>
+    <link href="home.css" rel="stylesheet">
+    <script>
+    const t = localStorage.getItem('theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+    </script>
+</head>
+<body>
+<header>
+    <h1>BakeBoard</h1>
+    <ul>
+        <li><a href="Homepage.html">Homepage</a></li>
+        <li><a href="index.html">Sign up</a></li>
+        <li><a href="Loginpage.html">Login</a></li>
+        <li class="search">
+            <form>
+                <label for="search">Search: </label>
+                <input type="text" id="search" placeholder="Search">
+            </form>
+        </li>
+        <li class="search"><button id="theme-toggle">Toggle theme</button></li>
+    </ul>
+</header>
+<script src="theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+ul{
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+    background-color: black;
+}
+ul li {
+  float: left;
+}
+ul li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+ul li a:hover {
+  background-color: #1c1a1a;
+}
+ul li.search {
+  float: right;
+  padding: 10px 16px;
+}
+
+ul li.search label {
+  color: white;
+}
+:root {
+    --bg: #FFF8EE;
+    --panel: #FFFFFF;
+    --soft: #F6E7D2;
+    --text: #3B2416;
+    --muted: #7A5C48;
+    --accent: #A8541A;
+    --accent-text: #FFFFFF;
+    --border: #E3CBA8;
+    --chart-1: #C8702A;
+    --chart-2: #E0A458;
+    --chart-3: #8C5A3C;
+    --chart-4: #6B8E5A;
+    --chart-5: #B5513C;
+}
+
+/* Dark by system setting (unless the user forced light) */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --bg: #2B1B12;
+        --panel: #3A261A;
+        --soft: #4A3022;
+        --text: #F8EBD7;
+        --muted: #C9B197;
+        --accent: #E0A458;
+        --accent-text: #2B1B12;
+        --border: #5A3F2D;
+    }
+}
+
+/* Dark when the user picks it with the toggle */
+:root[data-theme="dark"] {
+    --bg: #2B1B12;
+    --panel: #3A261A;
+    --soft: #4A3022;
+    --text: #F8EBD7;
+    --muted: #C9B197;
+    --accent: #E0A458;
+    --accent-text: #2B1B12;
+    --border: #5A3F2D;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+}
+
+.card, main {
+    background: var(--panel);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+}
+
+.muted { color: var(--muted); }
+
+button, input[type="submit"] {
+    background: var(--accent);
+    color: var(--accent-text);
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+a { color: var(--accent); }
+
+input[type="text"], input[type="email"], input[type="password"] {
+    background: var(--soft);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+ul { background-color: var(--panel); border-bottom: 2px solid var(--border); }
+ul li a { color: var(--text); }
+ul li a:hover { background-color: var(--soft); }
+ul li.search label { color: var(--text); }

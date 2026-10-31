@@ -1,0 +1,34 @@
+:root {
+    --bg: #FFF8EE;
+    --panel: #FFFFFF;
+    --soft: #F6E7D2;
+    --text: #3B2416;
+    --muted: #7A5C48;
+    --accent: #A8541A;
+    --accent-text: #FFFFFF;
+    --border: #E3CBA8;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --bg: #2B1B12;
+        --panel: #3A261A;
+        --soft: #4A3022;
+        --text: #F8EBD7;
+        --muted: #C9B197;
+        --accent: #E0A458;
+        --accent-text: #2B1B12;
+        --border: #5A3F2D;
+    }
+}
+
+:root[data-theme="dark"] {
+    --bg: #2B1B12;
+    --panel: #3A261A;
+    --soft: #4A3022;
+    --text: #F8EBD7;
+    --muted: #C9B197;
+    --accent: #E0A458;
+    --accent-text: #2B1B12;
+    --border: #5A3F2D;
+}

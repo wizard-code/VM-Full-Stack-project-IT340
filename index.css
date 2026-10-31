@@ -1,0 +1,80 @@
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+header h1,
+main h1 {
+  margin: 0 0 16px;
+  text-align: center;
+}
+
+main {
+  background: var(--panel);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 24px 40px;
+  width: 100%;
+  max-width: 320px;
+  box-sizing: border-box;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fields input[type="text"],
+.fields input[type="email"],
+.fields input[type="password"] {
+  background: var(--soft);
+  color: var(--text);
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pwd-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#eye {
+  background: var(--soft);
+  border-radius: 50%;
+  padding: 6px;
+  height: 20px;
+  box-sizing: content-box;
+}
+
+.buttons {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+button,
+input[type="submit"],
+input[type="reset"] {
+  background: var(--accent);
+  color: var(--accent-text);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+a {
+  color: var(--accent);
+}

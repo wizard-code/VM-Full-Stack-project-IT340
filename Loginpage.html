@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login site</title>
+    <link href="theme.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
+    <script>
+    const t = localStorage.getItem('theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+</script>
+</head>
+<body>
+    <header><h1 id="title">BakeBoard</h1></header>
+    <main>
+        <h1>Login</h1>
+        <form method="post" onsubmit="return check()">
+            <div class="fields">
+                <label for="UnameOrEmail">Username/Email</label>
+                <input type="text" id="UnameOrEmail" name="UnameOrEmail">
+
+                <label for="pwd">Password</label>
+                <div class="pwd-row">
+                    <input type="password" id="pwd" name="pwd">
+                    <img id="eye" src="media/eye_closed.png" alt="Show password">
+                </div>
+
+                <div class="buttons">
+                    <input id="sub" type="submit">
+                    <input type="reset">
+                </div>
+
+                <a id="forgot" href="forgotPassword.html">Forgot Password</a>
+            </div>
+        </form>
+    </main>
+    <script src="index.js"></script>
+    <script src="theme.js"></script>
+</body>
+</html>

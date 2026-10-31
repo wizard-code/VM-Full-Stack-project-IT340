@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BakeBoard Dashboard</title>
+    <script>(() => { const t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); })();</script>
+    <link href="theme.css" rel="stylesheet">
+    <link href="dashboard.css" rel="stylesheet">
+</head>
+<body>
+    <header class="top">
+        <h1>BakeBoard</h1>
+        <div class="top-right">
+            <label for="loc" id="locLabel" hidden>Location</label>
+            <select id="loc" hidden></select>
+            <span id="who"></span>
+            <button id="theme-toggle" type="button">Toggle theme</button>
+            <button id="logout" type="button">Log out</button>
+        </div>
+    </header>
+
+    <main class="dash">
+        <p id="msg" role="status" class="msg" hidden></p>
+
+        <section class="stats">
+            <div class="card"><span>Low-stock items</span><strong id="sLow">–</strong></div>
+            <div class="card"><span>Pending approvals</span><strong id="sPending">–</strong></div>
+            <div class="card"><span>Sales (30 days)</span><strong id="sSales">–</strong></div>
+            <div class="card" id="costCard" hidden><span>Costs (30 days)</span><strong id="sCosts">–</strong></div>
+        </section>
+
+        <section class="grid">
+            <div class="panel">
+                <h2>Stock levels</h2>
+                <div id="stockChart"></div>
+            </div>
+            <div class="panel">
+                <div class="panel-head">
+                    <h2>Sales</h2>
+                    <label for="salesPeriod" class="sr">Period</label>
+                    <select id="salesPeriod"><option value="day">Daily</option><option value="week">Weekly</option><option value="month" selected>Monthly</option></select>
+                </div>
+                <div id="salesChart"></div>
+            </div>
+            <div class="panel" id="costPanel" hidden>
+                <div class="panel-head">
+                    <h2>Material costs</h2>
+                    <label for="costPeriod" class="sr">Period</label>
+                    <select id="costPeriod"><option value="day">Daily</option><option value="week">Weekly</option><option value="month" selected>Monthly</option></select>
+                </div>
+                <div id="costChart"></div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Inventory</h2>
+            <div class="scroll"><table id="itemsTable"></table></div>
+        </section>
+
+        <section class="panel">
+            <h2>Submit a change</h2>
+            <p class="hint">Add as many rows as you need. A manager must approve each one before stock or sales change.</p>
+            <form id="changeForm">
+                <div id="changeRows"></div>
+                <div class="form-actions">
+                    <button type="button" class="ghost" id="addChangeRow">+ Add row</button>
+                    <button type="submit">Submit all</button>
+                </div>
+            </form>
+            <datalist id="itemList"></datalist>
+        </section>
+
+        <section class="panel">
+            <h2>Add a new item</h2>
+            <p class="hint">Add anything you use or sell, one row per item. A manager approves each one before it shows in the list.</p>
+            <form id="addForm">
+                <div id="addRows"></div>
+                <div class="form-actions">
+                    <button type="button" class="ghost" id="addItemRow">+ Add row</button>
+                    <button type="submit">Submit all</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="panel">
+            <h2 id="changesTitle">Changes</h2>
+            <div class="scroll"><table id="changesTable"></table></div>
+        </section>
+    </main>
+
+    <script src="dashboard.js"></script>
+    <script src="theme.js"></script>
+</body>
+</html>
