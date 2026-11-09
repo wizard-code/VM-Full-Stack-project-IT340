@@ -1,4 +1,4 @@
-function eye() {
+function eye() { // open and close the eye icon to show or hide password
     const pw = document.getElementById("pwd");
     const icon = document.getElementById("eye");
 
@@ -15,7 +15,7 @@ function eye() {
 
 document.getElementById("eye").addEventListener("click", eye);
 
-function validate() {
+function validate() { // validate username or email
     const x = document.getElementById("UnameOrEmail");
     const val = x.value.trim();
 
@@ -41,7 +41,7 @@ function validate() {
     return true;
 }
 
-function pass() {
+function pass() { // validate password
     const x = document.getElementById("pwd");
     const val = x.value.trim();
     const pwdRe = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)\S{8,15}$/;
@@ -58,9 +58,19 @@ function pass() {
     }
     return true;
 }
+function cpass() { // validate confirm password
+    const x = document.getElementById("pwd");
+    const y = document.getElementById("Cpwd");
+    if (x.value !== y.value) {
+        alert("Passwords do not match");
+        y.focus();
+        return false;
+    }
+    return true;
+}
 
-function check() {
-    return validate() && pass();
+function check() { // validate both username/email and password and prevent form submission if either is invalid
+    return validate() && pass() && cpass();
 }
 function mustEmail(e) {
     const x = document.getElementById("UnameOrEmail");
