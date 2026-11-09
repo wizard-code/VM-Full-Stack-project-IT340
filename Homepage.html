@@ -1,29 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Homepage</title>
-    <link href="home.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BakeBoard</title>
     <script>
-    const t = localStorage.getItem('theme');
-    if (t) document.documentElement.setAttribute('data-theme', t);
+        (() => { const t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); })();
     </script>
+    <link href="theme.css" rel="stylesheet">
+    <link href="homepage.css" rel="stylesheet">
 </head>
 <body>
-<header>
-    <h1>BakeBoard</h1>
-    <ul>
-        <li><a href="Homepage.html">Homepage</a></li>
-        <li><a href="index.html">Sign up</a></li>
-        <li><a href="Loginpage.html">Login</a></li>
-        <li class="search">
-            <form>
-                <label for="search">Search: </label>
-                <input type="text" id="search" placeholder="Search">
-            </form>
-        </li>
-        <li class="search"><button id="theme-toggle">Toggle theme</button></li>
-    </ul>
-</header>
-<script src="theme.js"></script>
+    <header class="nav">
+        <a class="brand" href="Homepage.html">BakeBoard</a>
+        <nav>
+            <a href="Homepage.html">Homepage</a>
+            <a href="index.html">Sign up</a>
+            <a href="Loginpage.html">Login</a>
+            <button id="theme-toggle" type="button">Toggle theme</button>
+        </nav>
+    </header>
+
+    <main class="page">
+        <section class="hero">
+            <h1>Run your bakery by the numbers</h1>
+            <p>Track ingredients, costs and sales for one bakery or many, all in one dashboard.</p>
+            <div class="hero-actions">
+                <a class="btn" href="index.html">Sign up</a>
+                <a class="btn outline" href="Loginpage.html">Login</a>
+            </div>
+        </section>
+
+        <section class="features">
+            <article class="feature">
+                <h2>Inventory</h2>
+                <p>Raw materials and warehouse stock, with low-stock warnings.</p>
+            </article>
+            <article class="feature">
+                <h2>Sales</h2>
+                <p>See what sold and what is left in the warehouse.</p>
+            </article>
+            <article class="feature">
+                <h2>Costs</h2>
+                <p>Unit costs and spending by category.</p>
+            </article>
+            <article class="feature">
+                <h2>Multiple locations</h2>
+                <p>Filter everything by bakery location.</p>
+            </article>
+        </section>
+
+        <section class="preview" aria-label="Dashboard preview">
+            <div class="preview-head">
+                <h2>Dashboard preview</h2>
+                <span class="pill">All locations ▾</span>
+            </div>
+            <div class="preview-stats">
+                <div class="stat"><span>Stock value</span><strong>$0,000</strong></div>
+                <div class="stat"><span>Items sold</span><strong>000</strong></div>
+                <div class="stat"><span>Low-stock items</span><strong>0</strong></div>
+            </div>
+            <div class="bars" aria-hidden="true">
+                <div style="height:50px"></div>
+                <div style="height:80px"></div>
+                <div style="height:65px"></div>
+                <div style="height:100px"></div>
+                <div style="height:75px"></div>
+                <div style="height:110px"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="foot">BakeBoard · IT 340 project</footer>
+    <script src="theme.js"></script>
 </body>
 </html>
