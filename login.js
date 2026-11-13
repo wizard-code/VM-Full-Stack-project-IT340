@@ -8,7 +8,7 @@ function eye() {
         icon.alt = "Hide password";
     } else {
         pw.type = "password";
-        icon.src = "media/eye_closed.png";
+        image.src = "media/eye_closed.png";
         icon.alt = "Show password";
     }
 }

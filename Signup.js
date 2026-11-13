@@ -1,4 +1,4 @@
-function eye() {
+function eye() { // open and close the eye icon to show or hide password
     const pw = document.getElementById("pwd");
     const icon = document.getElementById("eye");
 
