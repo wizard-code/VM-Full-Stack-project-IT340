@@ -1,10 +1,9 @@
 <?php
 // Database connection parameters
-$servername = "localhost";
-$username = "your_username";
-$password = "your_password";
-$dbname = "your_database";
-
+$servername = "10.10.10.3";
+$username = "backend_user"; 
+$password = "Killcode_41=sql";
+$dbname = "bakeboard";
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
