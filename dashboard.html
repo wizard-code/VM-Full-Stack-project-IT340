@@ -1,95 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BakeBoard Dashboard</title>
-    <script>(() => { const t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); })();</script>
-    <link href="theme.css" rel="stylesheet">
-    <link href="dashboard.css" rel="stylesheet">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <header class="top">
-        <h1>BakeBoard</h1>
-        <div class="top-right">
-            <label for="loc" id="locLabel" hidden>Location</label>
-            <select id="loc" hidden></select>
-            <span id="who"></span>
-            <button id="theme-toggle" type="button">Toggle theme</button>
-            <button id="logout" type="button">Log out</button>
+<div class="bb-container">
+ <div class="bb-topbar">
+        <div>
+            <h1 style="margin:0;">BakeBoard Dashboard</h1>
+            <small id="userBadge">Loading user...</small>
         </div>
-    </header>
+        <div class="bb-controls">
+            <button id="themeToggle" class="bb-btn" type="button">Light Mode</button>
+            <div id="locationControls" style="display:flex; flex-wrap:wrap; gap:8px; align-items:center;"></div>
+            <label>Range:
+                <select id="rangeSelect">
+                    <option value="week">Last 7 Days (Weekly)</option>
+                    <option value="month">Last 30 Days (Monthly)</option>
+                </select>
+            </label>
+            <a href="Loginpage.html">Logout</a>
+        </div>
+    </div>
+    </div>
 
-    <main class="dash">
-        <p id="msg" role="status" class="msg" hidden></p>
+    <!-- Low Stock Alert Banner -->
+    <div id="lowStockBanner" class="bb-alert"></div>
 
-        <section class="stats">
-            <div class="card"><span>Low-stock items</span><strong id="sLow">–</strong></div>
-            <div class="card"><span>Pending approvals</span><strong id="sPending">–</strong></div>
-            <div class="card"><span>Sales (30 days)</span><strong id="sSales">–</strong></div>
-            <div class="card" id="costCard" hidden><span>Costs (30 days)</span><strong id="sCosts">–</strong></div>
-        </section>
+    <!-- 3 Charts -->
+    <div class="bb-grid">
+        <div class="bb-card">
+            <h3>Inventory Stock Levels</h3>
+            <canvas id="inventoryChart"></canvas>
+        </div>
+        <div class="bb-card">
+            <h3>Sales Revenue Over Time ($)</h3>
+            <canvas id="salesChart"></canvas>
+        </div>
+        <div class="bb-card">
+            <h3>Raw Material Spending ($)</h3>
+            <canvas id="costChart"></canvas>
+        </div>
+    </div>
 
-        <section class="grid">
-            <div class="panel">
-                <h2>Stock levels</h2>
-                <div id="stockChart"></div>
-            </div>
-            <div class="panel">
-                <div class="panel-head">
-                    <h2>Sales</h2>
-                    <label for="salesPeriod" class="sr">Period</label>
-                    <select id="salesPeriod"><option value="day">Daily</option><option value="week">Weekly</option><option value="month" selected>Monthly</option></select>
-                </div>
-                <div id="salesChart"></div>
-            </div>
-            <div class="panel" id="costPanel" hidden>
-                <div class="panel-head">
-                    <h2>Material costs</h2>
-                    <label for="costPeriod" class="sr">Period</label>
-                    <select id="costPeriod"><option value="day">Daily</option><option value="week">Weekly</option><option value="month" selected>Monthly</option></select>
-                </div>
-                <div id="costChart"></div>
-            </div>
-        </section>
+    <!-- Inventory Table -->
+    <div class="bb-card" style="margin-bottom:20px;">
+        <h3>Inventory (Materials &amp; Finished Products)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Type</th>
+                    <th>Quantity</th>
+                    <th>Low-Stock Alert</th>
+                    <th>Unit Cost</th>
+                    <th>Sale Price</th>
+                </tr>
+            </thead>
+            <tbody id="inventoryBody"></tbody>
+        </table>
+    </div>
 
-        <section class="panel">
-            <h2>Inventory</h2>
-            <div class="scroll"><table id="itemsTable"></table></div>
-        </section>
-
-        <section class="panel">
-            <h2>Submit a change</h2>
-            <p class="hint">Add as many rows as you need. A manager must approve each one before stock or sales change.</p>
-            <form id="changeForm">
-                <div id="changeRows"></div>
-                <div class="form-actions">
-                    <button type="button" class="ghost" id="addChangeRow">+ Add row</button>
-                    <button type="submit">Submit all</button>
-                </div>
+    <!-- Employee / Manager Submission Forms (All go to Approval Queue) -->
+    <div class="bb-grid">
+        <div class="bb-card">
+            <h3>Log Inventory Change (Pending Approval)</h3>
+            <form id="stockForm" class="bb-form">
+                <select id="stockItem" required></select>
+                <input type="number" step="0.01" id="stockDelta" placeholder="+Add / -Remove" required>
+                <input type="text" id="stockNote" placeholder="Note (e.g. restock)">
+                <button type="submit" class="bb-btn">Submit</button>
             </form>
-            <datalist id="itemList"></datalist>
-        </section>
+        </div>
 
-        <section class="panel">
-            <h2>Add a new item</h2>
-            <p class="hint">Add anything you use or sell, one row per item. A manager approves each one before it shows in the list.</p>
-            <form id="addForm">
-                <div id="addRows"></div>
-                <div class="form-actions">
-                    <button type="button" class="ghost" id="addItemRow">+ Add row</button>
-                    <button type="submit">Submit all</button>
-                </div>
+        <div class="bb-card">
+            <h3>Log Sale (Pending Approval)</h3>
+            <form id="saleForm" class="bb-form">
+                <select id="saleItem" required></select>
+                <input type="number" step="0.01" min="0.01" id="saleQty" placeholder="Qty sold" required>
+                <input type="text" id="saleNote" placeholder="Note">
+                <button type="submit" class="bb-btn">Submit</button>
             </form>
-        </section>
+        </div>
 
-        <section class="panel">
-            <h2 id="changesTitle">Changes</h2>
-            <div class="scroll"><table id="changesTable"></table></div>
-        </section>
-    </main>
+        <div class="bb-card">
+            <h3>Propose New Item (Pending Approval)</h3>
+            <form id="newItemForm" class="bb-form">
+                <input type="text" id="newName" placeholder="Name (e.g. Muffin)" required>
+                <select id="newType">
+                    <option value="material">Raw Material</option>
+                    <option value="product">Finished Product</option>
+                </select>
+                <input type="text" id="newUnit" placeholder="Unit (kg, pcs)" required>
+                <input type="number" step="0.01" min="0" id="newQty" placeholder="Start Qty" required>
+                <input type="number" step="0.01" min="0" id="newCost" placeholder="Unit Cost ($)" required>
+                <input type="number" step="0.01" min="0" id="newPrice" placeholder="Price ($ if product)">
+                <button type="submit" class="bb-btn">Submit</button>
+            </form>
+        </div>
+    </div>
+  <!-- Manager Admin Panel (hidden for employees) -->
+    <div id="managerPanel" style="display:none; margin-top:24px; margin-bottom:24px;">
+        <div class="bb-grid">
+            <div class="bb-card">
+                <h3>Add Bakery Location</h3>
+                <form id="locationForm" class="bb-form">
+                    <input type="text" id="newLocationName" placeholder="e.g. Newark Branch" required>
+                    <button type="submit" class="bb-btn">Add Location</button>
+                </form>
+            </div>
+        </div>
+        <div class="bb-card">
+            <h3>Manage Users (Promote to Manager &amp; Assign Location)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Assigned Location</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="usersBody"></tbody>
+            </table>
+        </div>
+    </div>
 
-    <script src="dashboard.js"></script>
-    <script src="theme.js"></script>
+    <!-- Approval Queue -->
+    <div class="bb-card">
+        <h3>Pending Approval Queue</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Item</th>
+                    <th>Details</th>
+                    <th>Requested By</th>
+                    <th>Note</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="pendingBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script src="dashboard.js"></script>
 </body>
 </html>

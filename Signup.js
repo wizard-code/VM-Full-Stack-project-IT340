@@ -52,9 +52,14 @@ function checkEmail() {
 
 function pass() {
     const x = document.getElementById("pwd");
-    const val = x.value; // no trim, \S in the regex rejects spaces
+    const val = x.value;
     const pwdRe = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)\S{8,15}$/;
 
+    if (/\s/.test(val)) {
+        alert("Password cannot contain spaces");
+        x.focus();
+        return false;
+    }
     if (val.length < 8 || val.length > 15) {
         alert("Password length should be 8-15 characters long");
         x.focus();
