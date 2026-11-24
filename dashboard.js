@@ -1,3 +1,9 @@
+window.addEventListener("pageshow", async () => {
+    const res = await fetch("dashboard_api.php?action=data", { cache: "no-store" });
+    if (res.status === 401) {
+        window.location.replace("Loginpage.html");
+    }
+});
 let invChart = null;
 let salesChart = null;
 let costChart = null;
